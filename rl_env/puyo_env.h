@@ -1,6 +1,4 @@
-
 #pragma once
-
 #include "../core/move.h"
 #include "../core/chain.h"
 #include <array>
@@ -19,7 +17,6 @@ public:
         std::array<cell::Pair, 3> visible{};
         int turn = 0;
     };
-
     struct Result {
         Observation observation;
         int chains = 0;
@@ -35,7 +32,6 @@ public:
         done_ = false;
         return observation();
     }
-
     Observation observation() {
         Observation obs;
         for (int y = 0; y < 13; ++y) {
@@ -53,7 +49,6 @@ public:
         obs.turn = turn_;
         return obs;
     }
-
     std::array<bool, ACTION_COUNT> legal_actions() {
         std::array<bool, ACTION_COUNT> mask{};
         if (done_ || turn_ >= MAX_TURNS) return mask;
@@ -68,7 +63,6 @@ public:
         }
         return mask;
     }
-
     Result step(int action_id) {
         if (done_) {
             throw std::logic_error("Episode already ended");
@@ -84,7 +78,6 @@ public:
         field_.drop_pair(
             placement.x, placement.r, queue_.at(turn_)
         );
-
         auto popped = field_.pop();
         auto outcome = chain::get_score(popped);
         ++turn_;
@@ -99,7 +92,6 @@ public:
                 [](bool legal) { return legal; }
             );
         }
-
         done_ = terminated || truncated;
         return {
             observation(),
@@ -110,6 +102,13 @@ public:
         };
     }
 
+    // Simulate one legal action without changing the real environment.
+    // The copy owns a separate field, queue and turn counter.
+    Result preview(int action_id) const {
+        PuyoEnv simulated = *this;
+        return simulated.step(action_id);
+    }
+
     bool done() const { return done_; }
 
 private:
@@ -117,7 +116,6 @@ private:
     cell::Queue queue_;
     int turn_ = 0;
     bool done_ = false;
-
     static int encode_action(move::Placement p) {
         switch (p.r) {
         case direction::Type::UP:    return p.x;
@@ -127,7 +125,6 @@ private:
         }
         throw std::invalid_argument("Invalid rotation");
     }
-
     static move::Placement decode_action(int id) {
         if (id < 6)
             return {static_cast<i8>(id), direction::Type::UP};

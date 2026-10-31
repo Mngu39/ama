@@ -1,0 +1,2 @@
+# Training weights are local artifacts; do not commit them.
+checkpoints/

@@ -179,30 +179,46 @@ policy.select_action(observation, legal_mask)
 
 신경망 정책은 평가 중 탐색 노이즈, Dropout, 학습 업데이트 등의 처리 방식을 명확하게 설정해야 합니다.
 
+
 ## 7. 한 에피소드의 플레이 시각화
 
-원본 Ama 프로젝트에는 PuyoP 사이트의 플레이 리플레이 URL을 생성하는 코드가 있습니다.
+기존 Ama 탐색 AI뿐만 아니라, 팀원이 구현한 RL 모델의 플레이도 PuyoP 사이트에서 시각화할 수 있습니다.
 
-예시 URL:
-
-http://www.puyop.com/s/_3c5cco8K7wcM7IfmdQcMiMiEfc183IhQfKiM3Cbifuigfmc8cwio1kfgdk0o3sgA1E8K1E6igA
-
-브라우저에서 이 링크를 열면 해당 착수 시퀀스를 시각적으로 살펴볼 수 있습니다.
-
-기존 Ama 탐색 AI로 리플레이를 만드는 방법:
+### 7.1 기존 Ama 탐색 AI의 리플레이
 
 ```bash
 make PEXT=true puyop
 ./bin/puyop/puyop.exe 12345
 ```
 
-출력된 URL을 브라우저에 붙여넣으면 됩니다.
+출력된 PuyoP URL을 브라우저에서 열면 됩니다.
 
-**중요:** 이 실행은 기존 Ama 탐색 AI를 사용합니다. 팀원이 만든 RL 모델의 플레이를 보여주는 것은 아닙니다.
+### 7.2 RL 모델의 리플레이
 
-현재 `PuyoEnv`에는 리플레이 URL 생성 기능이 연결되어 있지 않습니다. RL 모델에서 URL을 만들려면 해당 에피소드의 뿌요 쌍과 선택한 행동 번호를 기록한 뒤 원본 Ama의 URL 형식으로 인코딩해야 합니다.
+현재 구현된 `evaluation/replay.py`를 사용합니다.
 
-별도의 `evaluation/replay.py` 유틸리티를 추가하여 이 작업을 지원하도록 할 수 있습니다.
+```bash
+python -m evaluation.replay \
+  --policy teams.template.random_baseline.eval_policy \
+  --seed 12345
+```
+
+실행 결과에는 다음 정보가 출력됩니다.
+
+- **Seed:** 뿌요 시퀀스 시드
+- **Turns:** 총 착수 수
+- **Total score:** 누적 점수
+- **Max chain:** 최대 연쇄 수
+- **Replay:** 플레이 재생 URL
+
+출력된 `Replay` 주소를 브라우저에서 열면 해당 에피소드의 착수 과정을 볼 수 있습니다.
+
+이 기능은 실제 브라우저에서 재생 검증을 완료했습니다.
+
+다른 팀원의 RL 모델을 재생하려면 `--policy`에 해당 실험의 `eval_policy` 모듈 경로를 입력하면 됩니다.
+
+학습된 모델의 체크포인트가 필요한 경우 `--checkpoint` 옵션도 사용할 수 있습니다.
+
 
 ## 8. 리플레이 활용 방안
 

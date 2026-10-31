@@ -181,10 +181,6 @@ drive.mount("/content/drive")
 
 GitHub Actions를 사용하면 개인 PC 없이 GitHub의 Ubuntu Runner에서 빌드·테스트·평가를 실행할 수 있습니다.
 
-단, 실행하려면 먼저 `.github/workflows/` 아래에 프로젝트용 워크플로 파일을 추가해야 합니다. 기존 저장소에 있는 워크플로와는 별개입니다.
-
-워크플로를 추가한 후:
-
 1. GitHub 저장소 접속
 2. 상단 `Actions` 선택
 3. 왼쪽에서 `RL Evaluation` 워크플로 선택

@@ -1,1 +1,4 @@
 /bin/
+/.venv/
+/rl_env/*.so
+__pycache__/

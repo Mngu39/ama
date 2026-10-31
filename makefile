@@ -16,7 +16,7 @@ ifeq ($(PEXT), true)
 CXXFLAGS += -DPEXT
 endif
 
-SRC_AI = core/*.cpp ai/*.cpp ai/search/*.cpp
+SRC_AI = $(shell find core ai -type f -name '*.cpp')
 
 .PHONY: all puyop test clean makedir
 

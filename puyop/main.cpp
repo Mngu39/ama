@@ -8,7 +8,7 @@ void load_json(beam::eval::Weight& h)
     json js;
     file >> js;
     file.close();
-    from_json(js, h);
+    from_json(js.at("build"), h);
 };
 
 void save_json()
@@ -83,8 +83,8 @@ int main(int argc, char** argv)
 
         i32 plan_score = mv.score;
 
-        printf("ets: %d", plan_score / beam::BRANCH);
-        printf(" - %d ms\n", dt);
+        std::cout << "ets: " << (plan_score / beam::BRANCH)
+          << " - " << dt << " ms\n";
 
         if (chain.score >= 78000) {
             score = chain.score;

@@ -1,0 +1,50 @@
+name: Build and try Ama
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_demo:
+        description: 'Run the built-in Ama AI demo (may take time)'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Checkout Ama
+        uses: actions/checkout@v4
+
+      - name: Check compiler and CPU
+        shell: bash
+        run: |
+          g++ --version
+          lscpu
+          grep -qw sse4_1 /proc/cpuinfo || { echo 'SSE4.1 is not available'; exit 1; }
+          grep -qw bmi2 /proc/cpuinfo || { echo 'BMI2/PEXT is not available'; exit 1; }
+
+      - name: Build Ama puyop client
+        run: |
+          make PEXT=true puyop
+          file bin/puyop/puyop.exe
+
+      - name: Run built-in AI demo with fixed seed
+        if: ${{ inputs.run_demo }}
+        shell: bash
+        run: |
+          timeout 180s stdbuf -oL ./bin/puyop/puyop.exe 12345 | tee ama-demo.log
+
+      - name: Save build and demo output
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ama-build-output
+          if-no-files-found: warn
+          path: |
+            bin/puyop/puyop.exe
+            ama-demo.log

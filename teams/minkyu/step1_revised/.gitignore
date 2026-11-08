@@ -1,0 +1,8 @@
+# Generated training/evaluation artifacts (can exceed GB)
+checkpoints/
+runs/
+results/
+*.pt
+*.pth
+__pycache__/
+.pytest_cache/

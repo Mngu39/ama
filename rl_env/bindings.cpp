@@ -81,5 +81,11 @@ PYBIND11_MODULE(puyo_cpp, m) {
             return result;
         })
 
+
+        // Copy the full simulator state for multi-ply lookahead.  A clone is
+        // independent: stepping it never advances the real environment.
+        .def("clone", [](const PuyoEnv& env) {
+            return PuyoEnv(env);
+        })
         .def("done", &PuyoEnv::done);
 }

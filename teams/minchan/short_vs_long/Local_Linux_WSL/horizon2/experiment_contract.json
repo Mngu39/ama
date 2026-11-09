@@ -1,0 +1,48 @@
+{
+  "status": "PLANNED_NOT_EXECUTED",
+  "baseline_backbone": "GTR direct-reward afterstate value model",
+  "backbone_train_profile": "H2_GTR_COMMON_20K_B30K_E500K",
+  "backbone_td_n_step": 1,
+  "evaluation_seed_start": 100000,
+  "evaluation_games": 250,
+  "max_placements": 50,
+  "variants": {
+    "A_short_visible_3ply": {
+      "visible_pairs": 3,
+      "future_model": "none",
+      "search_depth": 3
+    },
+    "B_long_uniform": {
+      "visible_pairs": 3,
+      "future_model": "uniform",
+      "search_depth": 5
+    },
+    "C_long_predictor": {
+      "visible_pairs": 3,
+      "future_model": "learned",
+      "search_depth": 5
+    }
+  },
+  "common_controls": [
+    "same trained GTR checkpoint",
+    "same evaluation game seeds",
+    "same reward and board rules",
+    "same time-limit and hardware where feasible",
+    "B/C same search algorithm and compute limits"
+  ],
+  "future_prediction_policy": "At decision time use ONLY information available then; never read hidden pre-generated queue as features.",
+  "unresolved_questions": [
+    "exact 4/5 future-piece distribution and game rules must be confirmed",
+    "future 5-ply search algorithm and computational budget",
+    "which policy evaluation logs will be exported",
+    "train vs eval data leakage controls for predictor"
+  ],
+  "schema_notes": {
+    "episodes.csv": "Existing per-game evaluation output: seed, total_score, max_chain, decision_time_seconds, simulated/evaluated candidates.",
+    "future_prediction_log_template.csv": "Empty interface only, not a recorded result; probability vectors each length16 and aligned to a documented color-pair order."
+  },
+  "backbone_train_episodes": 20000,
+  "backbone_replay_capacity": 30000,
+  "backbone_epsilon_steps": 500000,
+  "backbone_selection_note": "Buffer 30000: 2026-11-07 team decision; epsilon_steps 500000: same-buffer 5000-episode 3-ply 250-game comparison vs 250000."
+}

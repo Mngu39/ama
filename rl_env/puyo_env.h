@@ -1,10 +1,14 @@
 #pragma once
+#include "ama_fast_queue.h"
 #include "../core/move.h"
 #include "../core/chain.h"
 #include <array>
 #include <algorithm>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
+#include <random>
 class PuyoEnv {
 public:
     static constexpr int ACTION_COUNT = 22;
@@ -109,6 +113,60 @@ public:
         return simulated.step(action_id);
     }
 
+    PuyoEnv fork_with_hidden_pairs(const std::vector<std::string>& pairs) const {
+        if (pairs.size() != queue_.size())
+            throw std::invalid_argument("Expected a complete 128-pair queue");
+
+        PuyoEnv fork = *this;
+
+        auto color = [](char c) -> cell::Type {
+            if (c != 'R' && c != 'Y' && c != 'G' && c != 'B')
+                throw std::invalid_argument("Hidden colors must be R/Y/G/B");
+            return cell::from_char(c);
+        };
+
+        for (size_t i = size_t(turn_ + 3); i < queue_.size(); ++i) {
+            if (pairs[i].size() != 2)
+                throw std::invalid_argument("Every pair must have two colors");
+
+            fork.queue_[i] = {
+                color(pairs[i][0]),
+                color(pairs[i][1])
+            };
+        }
+
+        return fork;
+    }
+
+    // Rejection-sample independent Ama seeds conditional on the three pairs
+    // visible at this turn. The fast candidate generator skips unused shuffles,
+    // jumps the LCG ahead, and rejects as early as correctness allows. It
+    // produces EXACTLY cell::create_queue(seed) for each accepted candidate.
+    // No original hidden pair or past-history information is inspected.
+    PuyoEnv fork_with_hidden_rule_seed(u32 fresh_seed) const {
+        if (queue_.size() < size_t(turn_ + 3))
+            throw std::logic_error("Not enough visible pairs for conditional fork");
+        std::mt19937 candidate_rng(fresh_seed);
+        constexpr u32 MAX_ATTEMPTS = 2'000'000;
+        const std::array<cell::Pair, 3> visible = {
+            queue_[size_t(turn_)],
+            queue_[size_t(turn_ + 1)],
+            queue_[size_t(turn_ + 2)]
+        };
+        cell::Queue accepted;
+        for (u32 trial = 0; trial < MAX_ATTEMPTS; ++trial) {
+            const u32 candidate_seed = static_cast<u32>(candidate_rng());
+            if (!ama_fast_queue::try_candidate(candidate_seed, turn_, visible, accepted))
+                continue;
+            PuyoEnv fork = *this;
+            for (size_t i = size_t(turn_ + 3); i < queue_.size(); ++i)
+                fork.queue_[i] = accepted[i];
+            return fork;
+        }
+        throw std::runtime_error(
+            "Ama rule_based conditional seed sampling exceeded 2000000 trials; "
+            "no approximate or oracle fallback was used");
+    }
     bool done() const { return done_; }
 
 private:

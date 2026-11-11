@@ -1,0 +1,132 @@
+{
+  "origin": "real newly revealed public NEXT2 from Ama engine",
+  "seed_start": 700000,
+  "seed_end": 700511,
+  "games": 512,
+  "examples": 23879,
+  "probes": [
+    {
+      "id": "t00_1",
+      "engine_seed": 700000,
+      "context": [
+        0,
+        6,
+        8,
+        9
+      ]
+    },
+    {
+      "id": "t00_2",
+      "engine_seed": 700001,
+      "context": [
+        0,
+        1,
+        8,
+        2
+      ]
+    },
+    {
+      "id": "t03_1",
+      "engine_seed": 700000,
+      "context": [
+        3,
+        11,
+        3,
+        13
+      ]
+    },
+    {
+      "id": "t03_2",
+      "engine_seed": 700001,
+      "context": [
+        3,
+        0,
+        1,
+        11
+      ]
+    },
+    {
+      "id": "t10_1",
+      "engine_seed": 700000,
+      "context": [
+        10,
+        2,
+        11,
+        15
+      ]
+    },
+    {
+      "id": "t10_2",
+      "engine_seed": 700001,
+      "context": [
+        10,
+        10,
+        1,
+        10
+      ]
+    },
+    {
+      "id": "t20_1",
+      "engine_seed": 700000,
+      "context": [
+        20,
+        13,
+        5,
+        11
+      ]
+    },
+    {
+      "id": "t20_2",
+      "engine_seed": 700001,
+      "context": [
+        20,
+        15,
+        8,
+        11
+      ]
+    },
+    {
+      "id": "t30_1",
+      "engine_seed": 700000,
+      "context": [
+        30,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "t30_2",
+      "engine_seed": 700001,
+      "context": [
+        30,
+        8,
+        5,
+        12
+      ]
+    },
+    {
+      "id": "t40_1",
+      "engine_seed": 700000,
+      "context": [
+        40,
+        1,
+        15,
+        14
+      ]
+    },
+    {
+      "id": "t40_2",
+      "engine_seed": 700001,
+      "context": [
+        40,
+        12,
+        4,
+        4
+      ]
+    }
+  ],
+  "heldout_not_used_for_training": true,
+  "position_marginal_kl_tv": "Weighted comparison between empirical Ama P(Z|position) and average Learned P(Z|position,visible) over survived heldout contexts. NOT KL/TV to exact Ama P(Z|position,visible); the reference conditions on observations surviving under the reference policy.",
+  "reference_is_fixed_across_checkpoints": true
+}

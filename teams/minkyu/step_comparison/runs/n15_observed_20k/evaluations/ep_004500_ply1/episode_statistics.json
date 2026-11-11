@@ -1,0 +1,47 @@
+{
+  "episodes": 100,
+  "max_chain_distribution": [
+    {
+      "games": 2,
+      "max_chain": 0,
+      "percent": 2.0
+    },
+    {
+      "games": 11,
+      "max_chain": 1,
+      "percent": 11.0
+    },
+    {
+      "games": 26,
+      "max_chain": 2,
+      "percent": 26.0
+    },
+    {
+      "games": 25,
+      "max_chain": 3,
+      "percent": 25.0
+    },
+    {
+      "games": 16,
+      "max_chain": 4,
+      "percent": 16.0
+    },
+    {
+      "games": 13,
+      "max_chain": 5,
+      "percent": 13.0
+    },
+    {
+      "games": 6,
+      "max_chain": 6,
+      "percent": 6.0
+    },
+    {
+      "games": 1,
+      "max_chain": 8,
+      "percent": 1.0
+    }
+  ],
+  "mean_max_chain": 3.11,
+  "mean_score": 3959.3
+}

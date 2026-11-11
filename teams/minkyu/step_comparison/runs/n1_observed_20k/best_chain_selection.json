@@ -1,0 +1,9 @@
+{
+  "episode": 14500,
+  "mean_max_chain": 5.46,
+  "mean_score": 17438.3,
+  "selection_rule": "mean_max_chain_then_mean_score",
+  "validation_games": 100,
+  "validation_ply": 1,
+  "validation_seed_start": 200000
+}

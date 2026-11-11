@@ -1,0 +1,14 @@
+{
+  "best_eval_mean_max_chain_this_segment": 5.46,
+  "best_eval_mean_score_this_segment": 18232.2,
+  "elapsed_seconds_including_resume_ancestor": 7647.794822216005,
+  "end_episode": 20000,
+  "env_steps": 934540,
+  "gradient_updates": 233572,
+  "n_step": 1,
+  "per_mode": "replacement",
+  "puyo_generator": "observed",
+  "run_dir": "teams/minkyu/step_comparison/runs/n1_observed_20k",
+  "run_id": "ama_form_td_n1_20261109T150931Z_seed12345",
+  "start_from_episode": 0
+}

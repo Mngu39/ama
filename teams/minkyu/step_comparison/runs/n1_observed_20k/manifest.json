@@ -1,0 +1,70 @@
+{
+  "cuda_device_name": "NVIDIA GeForce RTX 5070 Ti",
+  "device": "cuda",
+  "evaluation_config": {
+    "eval_episodes": 100,
+    "eval_every": 500,
+    "eval_ply": 1,
+    "eval_seed": 200000,
+    "root_keep": 22,
+    "second_keep": 484
+  },
+  "git_commit": "42d790d43b7d07318f468c124f7caa63ef01d12c",
+  "important_caveats": [
+    "Single actor; not the 1000-actor setup in Mori 2025.",
+    "5x14x6 features, not paper exact 4x14x6.",
+    "Afterstate board only; future pairs/remaining turns not network inputs.",
+    "PER mode selected in train_config; replacement changes training from legacy.",
+    "Validation-game SE is NOT between-training-run SE.",
+    "3-ply search is action selection, not 3-step TD learning.",
+    "n>1 targets sample intermediate actions under the behavior policy, then greedily bootstrap; no off-policy correction.",
+    "Probe TD diagnostics retain the original 1-step definition for across-horizon comparison.",
+    "Training actor ply and evaluation ply are separately configured."
+  ],
+  "model_config": {
+    "blocks": 6,
+    "channels": 256,
+    "input_channels": 5
+  },
+  "numpy": "2.5.4",
+  "parent_resume_checkpoint": null,
+  "planned_total_episodes": 20000,
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "run_id": "ama_form_td_n1_20261109T150931Z_seed12345",
+  "start_from_episode": 0,
+  "torch": "2.15.0+cu132",
+  "train_config": {
+    "batch_size": 16,
+    "blocks": 6,
+    "capacity": 30000,
+    "channels": 256,
+    "epsilon_final": 0.02,
+    "epsilon_start": 0.4,
+    "epsilon_steps": 500000,
+    "form_weight": 0.04,
+    "gameover_penalty": -1000.0,
+    "gamma": 0.995,
+    "infer_chunk": 128,
+    "lr": 0.0001,
+    "n_step": 1,
+    "per_alpha": 0.6,
+    "per_beta_start": 0.4,
+    "per_beta_steps": 50000,
+    "per_mode": "replacement",
+    "score_scale": 1000.0,
+    "seed": 12345,
+    "target_sync": 500,
+    "train_ply": 1,
+    "train_root_keep": 5,
+    "train_second_keep": 10,
+    "update_every": 4,
+    "warmup": 256
+  },
+  "value_config": {
+    "form_weight": 0.04,
+    "gameover_penalty": -1000.0,
+    "gamma": 0.995,
+    "n_step": 1,
+    "score_scale": 1000.0
+  }
+}

@@ -1,0 +1,74 @@
+--- a/rl_env/puyo_env.h
++++ b/rl_env/puyo_env.h
+@@ -2,10 +2,12 @@
+ #include "../core/move.h"
+ #include "../core/chain.h"
+ #include <array>
+ #include <algorithm>
+ #include <stdexcept>
++#include <string>
++#include <vector>
+ 
+ class PuyoEnv {
+ public:
+     static constexpr int ACTION_COUNT = 22;
+     static constexpr int MAX_TURNS = 50;
+@@ -107,10 +109,43 @@
+     Result preview(int action_id) const {
+         PuyoEnv simulated = *this;
+         return simulated.step(action_id);
+     }
+ 
++    // Make a counterfactual copy: preserve CURRENT/NEXT/NEXT2 and overwrite
++    // EVERY later pair. Caller must supply a full 128-pair alternative queue.
++    // The source environment is never changed, and no hidden pair is exposed.
++    PuyoEnv fork_with_hidden_pairs(const std::vector<std::string>& pairs) const {
++        if (pairs.size() != queue_.size())
++            throw std::invalid_argument("Expected a complete 128-pair queue");
++        PuyoEnv fork = *this;
++        auto color = [](char c) -> cell::Type {
++            if (c != 'R' && c != 'Y' && c != 'G' && c != 'B')
++                throw std::invalid_argument("Hidden colors must be R/Y/G/B");
++            return cell::from_char(c);
++        };
++        for (size_t i = size_t(turn_ + 3); i < queue_.size(); ++i) {
++            if (pairs[i].size() != 2)
++                throw std::invalid_argument("Every pair must have two colors");
++            fork.queue_[i] = {color(pairs[i][0]), color(pairs[i][1])};
++        }
++        return fork;
++    }
++
++    // Sample Ama's exact UNCONDITIONAL queue-generation rule using an
++    // independent seed, then splice only the hidden suffix. NOT an exact
++    // conditional posterior given the visible/history prefix.
++    PuyoEnv fork_with_hidden_rule_seed(u32 fresh_seed) const {
++        PuyoEnv fork = *this;
++        auto alternative = cell::create_queue(fresh_seed);
++        if (alternative.size() != queue_.size())
++            throw std::logic_error("Ama generated an unexpected queue size");
++        for (size_t i = size_t(turn_ + 3); i < queue_.size(); ++i)
++            fork.queue_[i] = alternative[i];
++        return fork;
++    }
++
+     bool done() const { return done_; }
+ 
+ private:
+     Field field_;
+     cell::Queue queue_;
+--- a/rl_env/bindings.cpp
++++ b/rl_env/bindings.cpp
+@@ -79,8 +79,12 @@
+                 result.append(candidate);
+             }
+             return result;
+         })
+ 
++        .def("fork_with_hidden_pairs", &PuyoEnv::fork_with_hidden_pairs,
++             py::arg("full_queue"))
++        .def("fork_with_hidden_rule_seed", &PuyoEnv::fork_with_hidden_rule_seed,
++             py::arg("fresh_seed"))
+         .def("clone", [](const PuyoEnv& env) { return PuyoEnv(env); })
+         .def("done", &PuyoEnv::done);
+ }

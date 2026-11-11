@@ -1,0 +1,3 @@
+run_id,checkpoint,ply,episode,seed,total_score,max_chain,turns,terminated,truncated,activations,simulated_candidates,evaluated_candidates,decision_time_seconds
+ama_form_td_n5_uniform_20261109T143204Z_seed12345,ep_000005.pt,1,0,200000,2550,2,50,False,True,9,727,727,0.039568511994730216
+ama_form_td_n5_uniform_20261109T143204Z_seed12345,ep_000005.pt,1,1,200001,3100,2,50,False,True,10,1012,1012,0.029163222039642278

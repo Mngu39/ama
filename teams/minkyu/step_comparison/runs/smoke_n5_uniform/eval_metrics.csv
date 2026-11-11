@@ -1,0 +1,2 @@
+episode,env_steps,gradient_updates,n_step,eval_ply,eval_episodes,mean_max_chain,std_max_chain_between_games,mean_score,mean_turns,p_max_chain_ge_3,p_max_chain_ge_5,p_max_chain_ge_7,p_max_chain_ge_10,mean_chain_per_activation,chain_activations_per_game,gameover_rate,avg_decision_time_seconds,eval_wall_time_seconds,new_best,new_best_chain
+5,246,120,5,1,2,2.0,0.0,2825.0,50.0,0.0,0.0,0.0,0.0,1.5263157894736843,9.5,0.0,0.0006873173403437249,0.09495412199612474,True,True

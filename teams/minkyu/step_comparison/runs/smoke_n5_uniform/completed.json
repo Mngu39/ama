@@ -1,0 +1,14 @@
+{
+  "best_eval_mean_max_chain_this_segment": 2.0,
+  "best_eval_mean_score_this_segment": 2825.0,
+  "elapsed_seconds_including_resume_ancestor": 17.674231946002692,
+  "end_episode": 5,
+  "env_steps": 246,
+  "gradient_updates": 120,
+  "n_step": 5,
+  "per_mode": "replacement",
+  "puyo_generator": "uniform",
+  "run_dir": "teams/minkyu/step_comparison/runs/smoke_n5_uniform",
+  "run_id": "ama_form_td_n5_uniform_20261109T143204Z_seed12345",
+  "start_from_episode": 0
+}

@@ -1,0 +1,14 @@
+{
+  "best_eval_mean_max_chain_this_segment": 4.55,
+  "best_eval_mean_score_this_segment": 9929.3,
+  "elapsed_seconds_including_resume_ancestor": 31790.215964747986,
+  "end_episode": 20000,
+  "env_steps": 958118,
+  "gradient_updates": 239466,
+  "n_step": 15,
+  "per_mode": "replacement",
+  "puyo_generator": "rule_based",
+  "run_dir": "teams/minkyu/step_comparison/runs/n15_rule_based_20k",
+  "run_id": "ama_form_td_n15_rule_based_20261110T061041Z_seed12345",
+  "start_from_episode": 0
+}

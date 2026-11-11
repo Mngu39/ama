@@ -1,0 +1,14 @@
+{
+  "best_eval_mean_max_chain_this_segment": 2.0,
+  "best_eval_mean_score_this_segment": 2280.0,
+  "elapsed_seconds_including_resume_ancestor": 19.30806820699945,
+  "end_episode": 5,
+  "env_steps": 240,
+  "gradient_updates": 117,
+  "n_step": 5,
+  "per_mode": "replacement",
+  "puyo_generator": "rule_based",
+  "run_dir": "teams/minkyu/step_comparison/runs/smoke_n5_rule_based",
+  "run_id": "ama_form_td_n5_rule_based_20261109T150449Z_seed12345",
+  "start_from_episode": 0
+}

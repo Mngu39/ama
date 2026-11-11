@@ -87,5 +87,9 @@ PYBIND11_MODULE(puyo_cpp, m) {
         .def("clone", [](const PuyoEnv& env) {
             return PuyoEnv(env);
         })
+        .def("fork_with_hidden_pairs", &PuyoEnv::fork_with_hidden_pairs,
+             py::arg("full_queue"))
+        .def("fork_with_hidden_rule_seed", &PuyoEnv::fork_with_hidden_rule_seed,
+             py::arg("fresh_seed"))
         .def("done", &PuyoEnv::done);
 }

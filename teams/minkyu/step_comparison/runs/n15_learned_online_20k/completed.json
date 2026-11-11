@@ -1,0 +1,16 @@
+{
+  "best_eval_mean_max_chain_this_segment": 4.61,
+  "best_eval_mean_score_this_segment": 10465.3,
+  "elapsed_seconds_including_resume_ancestor": 32626.618269546976,
+  "end_episode": 20000,
+  "env_steps": 951408,
+  "gradient_updates": 237789,
+  "learned_observations": 931408,
+  "learned_updates": 116411,
+  "n_step": 15,
+  "per_mode": "replacement",
+  "puyo_generator": "learned",
+  "run_dir": "teams/minkyu/step_comparison/runs/n15_learned_online_20k",
+  "run_id": "ama_form_td_n15_learned_20261110T181126Z_seed12345",
+  "start_from_episode": 0
+}

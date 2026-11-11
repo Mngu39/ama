@@ -2,3 +2,7 @@
 /.venv/
 /rl_env/*.so
 __pycache__/
+
+# Large RL training resume checkpoints (keep local; do not push to GitHub)
+/teams/minkyu/step_comparison/runs/**/last_resume.pt
+/teams/minkyu/step_comparison/runs/**/ep_*.pt
